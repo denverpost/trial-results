@@ -54,7 +54,6 @@ class Verdict:
 
     def __init__(self, sheet):
         self.sheet = sheet
-        self.is_metro = False
 
     def publish(self, worksheet=None):
         """ Publish the verdict data in whatever permutations we need.
@@ -104,30 +103,12 @@ class Verdict:
                         publish = False
 
             if publish:
-                # Turn the date into a timestamp.
-                try:
-                    timestamp = record['Timestamp'].split(' ')[0]
-                    record['Timestamp'] = timestamp
-                    if record['Date'] == '':
-                        # We do this so we can use the Date field from here on out.
-                        record['Date'] = record['Timestamp']
-                    else:
-                        timestamp = record['Date']
-                    day = datetime.strptime(timestamp, "%m/%d/%Y")
-                    record['unixtime'] = int(time.mktime(day.timetuple()))
-                except:
-                    record['unixtime'] = 0
+                # We filter field values here.
 
-                # We want to know how many days ago this happened,
-                # and add that to the record.
-                days_ago = datetime.today() - day
-                record['ago'] = days_ago.days
-                
                 recordwriter.writerow(row)
                 records += [record]
 
-        # Now build the day-by-day Verdict Indexes.
-        # We'll have a list of date/value pairs by the end of this.
+        """
         items = []
         for record in records:
             items.append((record['Date'], record['Value']))
@@ -141,7 +122,7 @@ class Verdict:
             fh = open('output/scores.jsonp', 'wb')
             fh.write('verdict_scores_callback(%s);' % content)
             fh.close()
-            
+        """ 
 
         if records:
             json.dump(records, fn['json'])
@@ -149,51 +130,6 @@ class Verdict:
             fn['jsonp'].write('verdict_callback(%s);' % content)
 
         return True
-
-    def calc_score(self):
-        """ Given a dict of date/score tuples, return a per-day list of date/score tuples.
-            We use an OrderedDict so we know what the first day of events is --
-            we can't be certain that something happens on every day, so we use
-            the first-day to populate a dict with every date between then and now.
-
-            Keep in mind more than one event can happen per day.
-            Also keep in mind that an event on one day still affects the 
-            next day's score -- it's worth half what it was worth the day before.
-            """
-        # items is expected to look something like
-        # [('6/1/2015', '2'), ('6/2/2015', '10'), ('6/3/2015', '4')]
-
-        # Consolidate the dates so we can make a set with this object.
-        event_days = OrderedDict()
-        distinct_days = OrderedDict()
-        for item in self.items:
-            if item[0] not in event_days:
-                event_days[item[0]] = 0
-        first_day = datetime.strptime(next(iter(event_days)), "%m/%d/%Y").date()
-        today = date.today()
-
-        i = 0
-        while True:
-            day = first_day + timedelta(days=i)
-            day_str = date.strftime(day, "%-m/%-d/%Y")
-            distinct_days[day_str] = 0
-            i += 1
-            if day == today:
-                break
-
-        # Add up the raw score.
-        for item in self.items:
-            distinct_days[item[0]] += int(item[1])
-
-        # Now loop through the raw score, and calculate the total scores.
-        # The next day's score is equal to half of the previous day's score plus any new events.
-        previous_score = 0
-        for day in iter(distinct_days):
-            score = round(previous_score/float(2.1)) + distinct_days[day]
-            distinct_days[day] = score
-            previous_score = score
-
-        return distinct_days
 
 def main(args):
     """ 
