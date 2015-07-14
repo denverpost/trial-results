@@ -138,6 +138,10 @@ def main(args):
     sheet.set_options(args)
     verdict = Verdict(sheet)
     verdict.publish()
+    sheet = Sheet('Verdict', 'by-victim')
+    sheet.set_options(args)
+    verdict = Verdict(sheet)
+    verdict.publish()
 
 def build_parser(args):
     """ A method to handle argparse.
