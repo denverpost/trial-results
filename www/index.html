@@ -13,15 +13,14 @@
 <meta name="verify-v1" content="mOG8mMgt4nlAgoL9im7OdaNtu4n5/ZQq9DHJakSpoeU=" />
 <meta name="msvalidate.01" content="9DAB14005AD5A9FFA4CA0EF58CC794BA" />
 <meta name="google-site-verification" content="2bKNvyyGh6DUlOvH1PYsmKN4KRlb-0ZI7TvFtuKLeAc" />
+<!-- generic -->
+<!--
 <script type="text/javascript" src="http://extras.denverpost.com/media/js/dputils-min.js?v=4"></script>
 <script async type=text/javascript src="http://extras.mnginteractive.com/live/js/metaRefresh.js"></script>
-<!-- generic -->
 <script type="text/javascript" src="http://extras.mnginteractive.com/live/js/scriptwells/denverpost.js"></script>
-
+-->
 <!-- Press + -->
-<script type="text/javascript" src="http://extras.mnginteractive.com/live/js/JOL/denverpostPressPlus.js"></script>
 <!-- NDN video -->
-<script type="text/javascript" async src="http://launch.newsinc.com/js/embed.js" id="_nw2e-js"></script>
 <meta property="twitter:app:name:iphone" content="Denver Post" />
 <meta property="twitter:app:name:ipad" content="Denver Post" />
 <meta property="twitter:app:name:googleplay" content="The Denver Post" />
@@ -30,7 +29,7 @@
 <meta property="twitter:app:id:googleplay" content="com.ap.denverpost" />
 
 <!-- GTM Site -->
-<script src="http://local.denverpost.com/assets/ga-site-datalayer.js"></script><!-- get profile info --><!--  user not logged in (javascript) --><script language="JavaScript" type="text/javascript">
+<!-- get profile info --><!--  user not logged in (javascript) --><script language="JavaScript" type="text/javascript">
 				MNGiRegistrationLoginStatus = "out";
 				MNGiRegistrationUserName = "";
 				MNGiRegistrationEmail = "";
@@ -538,6 +537,18 @@ span
 <h3>Verdicts for charges in the killings</h3>
 <p>The verdict for each charge is listed below the victim's name.</p>
 
+<script>
+$.ajax({
+  dataType: 'jsonp',
+  data: 'id=10',
+  url: 'http://extras.denverpost.com/app/trial-results/output/config.jsonp',
+  success: function () {
+    // do stuff
+    console.log("gaasdgasdgsa");
+  },
+});
+</script>
+
 <h4 class="victim">Jonathan Blunk</h4>
 <ul class="charges">
     <li>Murder, first degree, with intent: <span class="verdict guilty">Guilty</span></li>
@@ -807,7 +818,6 @@ else
     script.src = 'http://extras.denverpost.com/app/infinite/infinite.js' + cachebuster;
 }
 }
-if ( document.location.hash !== '#noscroll' ) $('head')[0].appendChild(script);
 
 // &&& PROPERTY-SPECIFIC
 var check_href = document.location.href;
@@ -1596,7 +1606,6 @@ $('#region2 td.pollsHead').html('<h4 style="margin-top:15px;">Opinion Poll</h4>'
 // We don't need to load this on the homepage.
 if ( document.location.pathname !== '/' )
 {
-    document.write('<script src="http://extras.mnginteractive.com/live/js/jquery/jBar/jBar_btown.js" type="text/javascript"><\/script>');
 }
 </script>
 <!--
