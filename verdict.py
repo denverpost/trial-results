@@ -87,7 +87,24 @@ class Verdict:
                 recordwriter.writerow(keys)
                 continue
             record = dict(zip(keys, row))
-            # {'Bad Thing': 'Test two', 'Timestamp': '5/27/2015 17:01:39', 'URL': '', 'Value': '7', 'Date': '5/26/2015'}
+
+
+            # If it's the config sheet:
+            if 'sheet' in record:
+                recordwriter.writerow(row)
+                records += [record]
+                continue
+
+            # numeric looks like:
+            # {"Charge": "Attempted murder in the first degree, after deliberation and with intent", "Verdict": "", "Count No.": "31", "name_full": "Alejandra Cardona-Lamas"}
+            # by-victim looks like
+            # {"Verdict": "", "Charge": "Attempted murder in the first degree, with \"universal malice manifesting extreme indifference\"", "name_first": "Kaylan", "Count No.": "", "name_last": "Bailey"}
+
+            # We need both name_full and name_last
+            if 'name_full' in record:
+                record['name_last'] = record['name_full'].split(' ')[-1]
+            else:
+                record['name_full'] = '%s %s' % (record['name_first'], record['name_last'])
 
             # We write lines one-by-one. If we have filters, we run
             # through them here to see if we're handling a record we
@@ -134,6 +151,10 @@ class Verdict:
 def main(args):
     """ 
         """
+    sheet = Sheet('Verdict', 'config')
+    sheet.set_options(args)
+    verdict = Verdict(sheet)
+    verdict.publish()
     sheet = Sheet('Verdict', 'numeric')
     sheet.set_options(args)
     verdict = Verdict(sheet)
