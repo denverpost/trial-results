@@ -538,21 +538,43 @@ $.ajax({
 });
 $.ajax({
   dataType: 'jsonp',
-  url: 'http://extras.denverpost.com/app/trial-results/output/by-victim.jsonp',
+  url: 'http://extras.denverpost.com/app/trial-results/output/by_victim.jsonp',
   success: function () {}
 });
+var verdict = {
+    sheet: '',
+    numeric: '',
+    by_victim: '',
+    sheets_loaded: 0,
+    tally: function()
+    {
+        this.sheets_loaded += 1;
+        if ( this.sheets_loaded == 2 )
+        {
+            this.init();
+        }
+    },
+    init: function()
+    {
+    }
+};
+
 function config_callback(items)
 {
-    window.verdict_sheet = items[0]['sheet'];
+    // Load the config. Right now it's just one variable, sheet.
+    window.verdict['sheet'] = items[0]['sheet'];
 }
 function numeric_callback(items)
 {
-    console.log(items);
+    window.verdict['numeric'] = items;
+    // Increase the verdict counter by 1.
+    window.verdict.tally();
 }
-function by-victim_callback(items)
+function by_victim_callback(items)
 {
-    console.log("asfdasdf");
-    console.log(items);
+    window.verdict['by_victim'] = items;
+    // Increase the verdict counter by 1.
+    window.verdict.tally();
 }
 </script>
 
