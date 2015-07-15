@@ -97,7 +97,7 @@ class Verdict:
 
             # numeric looks like:
             # {"Charge": "Attempted murder in the first degree, after deliberation and with intent", "Verdict": "", "Count No.": "31", "name_full": "Alejandra Cardona-Lamas"}
-            # by-victim looks like
+            # by_victim looks like
             # {"Verdict": "", "Charge": "Attempted murder in the first degree, with \"universal malice manifesting extreme indifference\"", "name_first": "Kaylan", "Count No.": "", "name_last": "Bailey"}
 
             # We need both name_full and name_last
@@ -143,7 +143,7 @@ def main(args):
     sheet.set_options(args)
     verdict = Verdict(sheet)
     verdict.publish()
-    sheet = Sheet('Verdict', 'by-victim')
+    sheet = Sheet('Verdict', 'by_victim')
     sheet.set_options(args)
     verdict = Verdict(sheet)
     verdict.publish()

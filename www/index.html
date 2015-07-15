@@ -38,10 +38,6 @@
 	MNGiRegistrationUrl = "https://secure.www.denverpost.com";
 	MNGiIDCookieName = "MNGID";
 </script><script type="text/javascript" src="http://extras.mnginteractive.com/live/js/mngiads/AdsInclude.js"></script><script type="text/javascript" src="http://extras.mnginteractive.com/live/js/otherinc/pop-window.js"></script><script type="text/javascript">
-										(function(){							
-										var src = (('https:'==document.location.protocol)?'https:':'http:')+'//www.googletagservices.com/tag/js/gpt.js';							
-										document.write('<scr'+'ipt src="'+src+'"></scr'+'ipt>');							
-										})();							
 									</script><script type="text/javascript">
 									googletag.pubads().setTargeting('page',['article']);
 									</script><!-- Site CSS = http://extras.mnginteractive.com/live/css/site36/redesign_default.css --><style type="text/css">
@@ -70,16 +66,8 @@
 	dfm.api("data","title", "Judge finalizes jury instructions in Aurora theater shooting trial");
 	dfm.api("data","siteDomain", "denverpost.com");
 	dfm.api("data","actualDomain", "www.denverpost.com");	
-	</script><!-- Rendered GSA meta tags --><meta property="pubDate" content="2015-07-13T16:06:26-0600"><meta property="startDate" content="2015-07-13T16:01:55-0600"><meta property="endDate" content="2025-07-13T16:01:32-0600"><meta property="modificationDate" content="2015-07-14T12:12:15-0600"><meta property="byline" content="By John Ingold"><meta name="twitter:domain" value="denverpost.com"></head><body class="bodyStyle"><!-- GA Data Layer --><script type="text/javascript" src="http://local.medianewsgroup.com/common/dfm/ga-datalayer.js"></script><!-- Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TLFP4R" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>
-(function(w,d,s,l,i) {
-   w[l]=w[l]||[];
-   w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
-   var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-   j.async=true;
-   j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})
-(window,document,'script','dataLayer','GTM-TLFP4R');
-</script><!-- End Google Tag Manager --><span id='redesign_default'><link type='text/css' rel='stylesheet' href='http://extras.mnginteractive.com/live/css/site36/redesign_default.css'><div class="contentStyle"><script type="text/javascript" language="javascript">
+	</script><!-- Rendered GSA meta tags --><meta property="pubDate" content="2015-07-13T16:06:26-0600"><meta property="startDate" content="2015-07-13T16:01:55-0600"><meta property="endDate" content="2025-07-13T16:01:32-0600"><meta property="modificationDate" content="2015-07-14T12:12:15-0600"><meta property="byline" content="By John Ingold"><meta name="twitter:domain" value="denverpost.com"></head><body class="bodyStyle"><!-- GA Data Layer -->
+<!-- End Google Tag Manager --><span id='redesign_default'><link type='text/css' rel='stylesheet' href='http://extras.mnginteractive.com/live/css/site36/redesign_default.css'><div class="contentStyle"><script type="text/javascript" language="javascript">
 
 function getPremiumNotice() {
     return document.getElementById("premiumNotice");
@@ -540,13 +528,32 @@ span
 <script>
 $.ajax({
   dataType: 'jsonp',
-  data: 'id=10',
   url: 'http://extras.denverpost.com/app/trial-results/output/config.jsonp',
-  success: function () {
-    // do stuff
-    console.log("gaasdgasdgsa");
-  },
+  success: function () {}
 });
+$.ajax({
+  dataType: 'jsonp',
+  url: 'http://extras.denverpost.com/app/trial-results/output/numeric.jsonp',
+  success: function () {}
+});
+$.ajax({
+  dataType: 'jsonp',
+  url: 'http://extras.denverpost.com/app/trial-results/output/by-victim.jsonp',
+  success: function () {}
+});
+function config_callback(items)
+{
+    window.verdict_sheet = items[0]['sheet'];
+}
+function numeric_callback(items)
+{
+    console.log(items);
+}
+function by-victim_callback(items)
+{
+    console.log("asfdasdf");
+    console.log(items);
+}
 </script>
 
 <h4 class="victim">Jonathan Blunk</h4>
@@ -820,62 +827,6 @@ else
 }
 
 // &&& PROPERTY-SPECIFIC
-var check_href = document.location.href;
-var inf_section = 'news';
-if ( /business|aerospace|airlines|economy|energy|foodretail|technology|telecom|tourism/i.exec(check_href) ) inf_section = 'business';
-else if ( /opinion|editorials|perspective/i.exec(check_href) ) inf_section = 'opinion';
-else if ( /comedy|art|theater|television|music|videogames/i.exec(check_href) ) inf_section = 'entertainment';
-else if ( /style|fashion|food|fitness|homegarden|petnews|smart|travel/i.exec(check_href) ) inf_section = 'style';
-else if ( /sports|broncos|avalanche|paige|kiszla|hochman|nuggets|rockies|rapids|superbowl|colleges|olympics|preps|outdoors|motorsports|cycling|skiing/i.exec(check_href) ) inf_section = 'sports';
-
-inf_config['article_set'] = inf_section;
-
-var script = document.createElement('script');
-script.type = 'text/javascript';
-script.src = 'http://extras.denverpost.com/cache/article/' + inf_config['property'] + '-' + inf_section + '.js';
-if ( document.location.hash !== '#noscroll' ) $('head')[0].appendChild(script);
-
-window.onload = function()
-{
-    inf_config['articles'] = ar.shuffle();
-
-    // Update inf with the values we've set in inf_config
-    if ( typeof inf_config !== 'undefined' )
-    {
-        for ( var key in inf_config )
-        {
-            if ( inf_config.hasOwnProperty(key) )
-            {
-                inf[key] = inf_config[key];
-            }
-        }
-    }
-
-    if ( document.location.hash !== '#noscroll' )
-    {
-        inf.init();
-        inf.checkpoints[0].bottom = inf.get_top();
-        $(window).scroll(inf, function()
-        {
-            run_on_scroll_interval();
-        });
-        var did_scroll = 0;
-        function run_on_scroll_interval() { did_scroll = 1; }
-        setInterval(function()
-        {
-            if ( did_scroll == 1 )
-            {
-                did_scroll = 0;
-                inf.check_scroll();
-            }
-        }, 500);
-    }
-}
-
-
-// Redirect to better 404 page in situations we've got a 404:
-//&& document.cookie.match('_g_u=([^;]*)(;|$)' ) == null
-//if ( document.getElementById('expiredArticleMsgId')  ) top.location.replace('http://www.denverpost.com/ci_15208788?source=404_' + article_id);
 </script>
 
 <!-- ##### End 404 detection and redirection ##### -->
@@ -1083,28 +1034,6 @@ window.onload = function()
 			$('#articleDate').append('<span style="float:right;" id="commentsCurrent"><a href="' + document.URL + '#disqus_thread" data-disqus-identifier="' + articleId + '" onclick="dpShowOtherTabTop(\'#dpArticleCommentingDump\')"></a></span>');
 			var disqus_shortname = 'dfm-denverpost';
 			var disqus_identifier = articleId;
-			if ($('#commentsCurrent').html().length > 0) {
-			    jQuery.ajax({
-			      type: 'GET',
-			      url: '//dfm-denverpost.disqus.com/count.js',
-			      dataType: 'script',
-			      cache: false
-			    });
-			    jQuery.ajax({
-			      type: 'GET',
-			      url: '//dfm-denverpost.disqus.com/embed.js',
-			      dataType: 'script',
-			      cache: false
-			    });
-			}
-            var CClooper = setInterval( function() {
-                var commentCountText = $('#commentsCurrent > a').html().split(' ');
-                if (commentCountText != '') {
-                    clearInterval(CClooper);
-                    var commentCountTabText = (commentCountText[0].toLowerCase() == 'add') ? "No comments" : ( (commentCountText[0] == 1) ? commentCountText[0] + ' comment' : commentCountText[0] + ' comments' );
-                    $('#commentsCurrentTab').html('(' + commentCountTabText + ')');
-                }
-            },100);
 			</script>
 
 			<!-- ##### End Disqus comments, comment count ##### -->
