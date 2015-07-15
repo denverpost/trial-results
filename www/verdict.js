@@ -100,32 +100,33 @@ var verdict = {
             var key = value['name_full'];
             var write_it = 1;
             var verdict = window.verdict;
-            if ( !(key in verdict['items']) )
+            if ( !(key in window.verdict['items']) )
             {
-                verdict['items'][key] = [];
+                window.verdict['items'][key] = [];
                 write_it = 0;
             }
-            verdict['items'][key].push(value);
+            window.verdict['items'][key].push(value);
 
             if ( write_it == 1 )
             {
                 // Some items we clean up
-                verdict['items'][key][0]['Charge'] = verdict.charge_lookup(verdict['items'][key][0]['Charge']);
-                verdict['items'][key][1]['Charge'] = verdict.charge_lookup(verdict['items'][key][1]['Charge']);
-                verdict['items'][key][0]['Verdict'] = verdict.verdict_lookup(verdict['items'][key][0]['Verdict']);
-                verdict['items'][key][1]['Verdict'] = verdict.verdict_lookup(verdict['items'][key][1]['Verdict']);
+                window.verdict['items'][key][0]['Charge'] = verdict.charge_lookup(window.verdict['items'][key][0]['Charge']);
+                window.verdict['items'][key][1]['Charge'] = verdict.charge_lookup(window.verdict['items'][key][1]['Charge']);
+                window.verdict['items'][key][0]['Verdict'] = verdict.verdict_lookup(window.verdict['items'][key][0]['Verdict']);
+                window.verdict['items'][key][1]['Verdict'] = verdict.verdict_lookup(window.verdict['items'][key][1]['Verdict']);
 
                 // Some values we compute.
-                verdict['items'][key][0]['slug'] = verdict.slugify(verdict['items'][key][0]['name_full']);
-                verdict['items'][key][0]['verdict_slug'] = verdict.slugify(verdict['items'][key][0]['Verdict']);
-                verdict['items'][key][1]['verdict_slug'] = verdict.slugify(verdict['items'][key][1]['Verdict']);
+                window.verdict['items'][key][0]['slug'] = verdict.slugify(window.verdict['items'][key][0]['name_full']);
+                window.verdict['items'][key][0]['verdict_slug'] = verdict.slugify(window.verdict['items'][key][0]['Verdict']);
+                window.verdict['items'][key][1]['verdict_slug'] = verdict.slugify(window.verdict['items'][key][1]['Verdict']);
 
 
-                var charges_markup = verdict.charge_markup(verdict['items'][key][0]) + verdict.charge_markup(verdict['items'][key][1]);
-                var markup = verdict.item_markup(verdict['items'][key][0], charges_markup);
+                var charges_markup = verdict.charge_markup(window.verdict['items'][key][0]) + verdict.charge_markup(window.verdict['items'][key][1]);
+                var markup = verdict.item_markup(window.verdict['items'][key][0], charges_markup);
                 $('#charges').append(markup);
             }
         });
+        this.items = {};
         this.sheets_loaded = 0;
     }
 };
