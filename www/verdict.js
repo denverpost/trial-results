@@ -1,18 +1,24 @@
-$.ajax({
-  dataType: 'jsonp',
-  url: 'http://extras.denverpost.com/app/trial-results/output/config.jsonp',
-  success: function () {}
-});
-$.ajax({
-  dataType: 'jsonp',
-  url: 'http://extras.denverpost.com/app/trial-results/output/numeric.jsonp',
-  success: function () {}
-});
-$.ajax({
-  dataType: 'jsonp',
-  url: 'http://extras.denverpost.com/app/trial-results/output/by_victim.jsonp',
-  success: function () {}
-});
+function get_verdict_json()
+{
+    $.ajax({
+      dataType: 'jsonp',
+      url: 'http://extras.denverpost.com/app/trial-results/output/config.jsonp',
+      success: function () {}
+    });
+    $.ajax({
+      dataType: 'jsonp',
+      url: 'http://extras.denverpost.com/app/trial-results/output/numeric.jsonp',
+      success: function () {}
+    });
+    $.ajax({
+      dataType: 'jsonp',
+      url: 'http://extras.denverpost.com/app/trial-results/output/by_victim.jsonp',
+      success: function () {}
+    });
+}
+get_verdict_json();
+var refresh_every = 10 * 1000;
+var verdict_interval = window.setInterval(function() { get_verdict_json() }, refresh_every);
 
 
 var verdict = {
@@ -88,6 +94,7 @@ var verdict = {
     {
         // Loop through the items, putting each item in this.items indexed by name_full.
         // If we have two items for that last name, we write it to the page.
+        $('#charges').html('');
         $.each(this[this['sheet']], function(index, value)
         {
             var key = value['name_full'];
@@ -119,6 +126,7 @@ var verdict = {
                 $('#charges').append(markup);
             }
         });
+        this.sheets_loaded = 0;
     }
 };
 
