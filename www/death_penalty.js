@@ -2,8 +2,8 @@ function get_verdict_json()
 {
     $.ajax({
       dataType: 'jsonp',
-      //url: 'http://extras.denverpost.com/app/trial-results/output/death_penalty.jsonp',
-      url: 'output/death_penalty.jsonp',
+      url: 'http://extras.denverpost.com/app/trial-results/output/death_penalty.jsonp',
+      //url: 'output/death_penalty.jsonp',
       success: function () {}
     });
 }
