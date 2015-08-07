@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""verdict.py docstring
+"""
 Turn the spreadsheet into a flatfile.
 """
 import os
@@ -143,7 +143,7 @@ def main(args):
     sheet.set_options(args)
     verdict = Verdict(sheet)
     verdict.publish()
-    sheet = Sheet('Verdict', 'by_victim')
+    sheet = Sheet('Verdict', 'death_penalty')
     sheet.set_options(args)
     verdict = Verdict(sheet)
     verdict.publish()

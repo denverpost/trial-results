@@ -2,17 +2,7 @@ function get_verdict_json()
 {
     $.ajax({
       dataType: 'jsonp',
-      url: 'http://extras.denverpost.com/app/trial-results/output/config.jsonp',
-      success: function () {}
-    });
-    $.ajax({
-      dataType: 'jsonp',
-      url: 'http://extras.denverpost.com/app/trial-results/output/numeric.jsonp',
-      success: function () {}
-    });
-    $.ajax({
-      dataType: 'jsonp',
-      url: 'http://extras.denverpost.com/app/trial-results/output/by_victim.jsonp',
+      url: 'http://extras.denverpost.com/app/trial-results/output/death_penalty.jsonp',
       success: function () {}
     });
 }
@@ -64,9 +54,8 @@ var verdict = {
     {
         // Verdicts are blank for no verdict, 0 for not guilty by reason of insanity, 1 for guilty and 2 for not guilty
         if ( verdict == '' ) return '';
-        else if ( verdict == '0' ) return 'Not guilty by reason of insanity';
-        else if ( verdict == '1' ) return 'Guilty';
-        else if ( verdict == '2' ) return 'Not guilty';
+        else if ( verdict == '0' ) return 'Death penalty';
+        else if ( verdict == '1' ) return 'Life in prison';
         return '';
     },
     items: {},
