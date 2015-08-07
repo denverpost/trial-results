@@ -2,19 +2,21 @@ function get_verdict_json()
 {
     $.ajax({
       dataType: 'jsonp',
-      url: 'http://extras.denverpost.com/app/trial-results/output/death_penalty.jsonp',
+      //url: 'http://extras.denverpost.com/app/trial-results/output/death_penalty.jsonp',
+      url: 'output/death_penalty.jsonp',
       success: function () {}
     });
 }
 get_verdict_json();
-var refresh_every = 300 * 1000;
+var refresh_every = 5 * 1000;
 var verdict_interval = window.setInterval(function() { get_verdict_json() }, refresh_every);
 
 
 var verdict = {
-    sheet: '',
+    sheet: 'death_penalty',
     numeric: '',
     by_victim: '',
+    death_penalty: '',
     sheets_loaded: 0,
     item_markup: function(item, charges) 
     {
@@ -69,16 +71,6 @@ var verdict = {
             .replace(/^-+/, '')             // Trim - from start of text
             .replace(/-+$/, '');            // Trim - from end of text
     },
-    tally: function()
-    {
-        // This is called by the jsonp callbacks. When the counter gets to
-        // 2, we have all the data we need and we run init().
-        this.sheets_loaded += 1;
-        if ( this.sheets_loaded == 2 )
-        {
-            this.init();
-        }
-    },
     init: function()
     {
         // Loop through the items, putting each item in this.items indexed by name_full.
@@ -122,18 +114,8 @@ var verdict = {
     }
 };
 
-function config_callback(items)
+function death_penalty_callback(items)
 {
-    // Load the config. Right now it's just one variable, sheet.
-    window.verdict['sheet'] = items[0]['sheet'];
-}
-function numeric_callback(items)
-{
-    window.verdict['numeric'] = items;
-    window.verdict.tally();
-}
-function by_victim_callback(items)
-{
-    window.verdict['by_victim'] = items;
-    window.verdict.tally();
+    window.verdict['death_penalty'] = items;
+    window.verdict.init();
 }

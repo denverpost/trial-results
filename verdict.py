@@ -135,14 +135,14 @@ class Verdict:
 def main(args):
     """ 
         """
-    sheet = Sheet('Verdict', 'config')
-    sheet.set_options(args)
-    verdict = Verdict(sheet)
-    verdict.publish()
-    sheet = Sheet('Verdict', 'numeric')
-    sheet.set_options(args)
-    verdict = Verdict(sheet)
-    verdict.publish()
+    #sheet = Sheet('Verdict', 'config')
+    #sheet.set_options(args)
+    #verdict = Verdict(sheet)
+    #verdict.publish()
+    #sheet = Sheet('Verdict', 'numeric')
+    #sheet.set_options(args)
+    #verdict = Verdict(sheet)
+    #verdict.publish()
     sheet = Sheet('Verdict', 'death_penalty')
     sheet.set_options(args)
     verdict = Verdict(sheet)
