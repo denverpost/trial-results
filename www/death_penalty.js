@@ -26,10 +26,10 @@ var verdict = {
 ' + charges + '\
 </ul>';
     },
-    charge_markup: function(charge)
+    charge_markup: function(charge, colon)
     {
         return '\
-    <li>' + charge['Charge'] + ' <span class="verdict ' + charge['verdict_slug'] + '">' + charge['Verdict'] + '</span></li>\n';
+    <li>' + charge['Charge'] + colon + ' <span class="verdict ' + charge['verdict_slug'] + '">' + charge['Verdict'] + '</span></li>\n';
     },
     charge_lookup: function(charge)
     {
@@ -79,21 +79,35 @@ var verdict = {
         $.each(this[this['sheet']], function(index, value)
         {
             var key = value['name_full'];
+            var write_it = 1;
             var verdict = window.verdict;
-            window.verdict['items'][key] = [];
+            if ( !(key in window.verdict['items']) )
+            {
+                window.verdict['items'][key] = [];
+                write_it = 0;
+            }
             window.verdict['items'][key].push(value);
 
-            // Some items we clean up
-            window.verdict['items'][key][0]['Charge'] = verdict.charge_lookup(window.verdict['items'][key][0]['Charge']);
-            window.verdict['items'][key][0]['Verdict'] = verdict.verdict_lookup(window.verdict['items'][key][0]['Verdict']);
+            if ( write_it == 1 )
+            {
+                // Some items we clean up
+                window.verdict['items'][key][0]['Charge'] = verdict.charge_lookup(window.verdict['items'][key][0]['Charge']);
+                window.verdict['items'][key][1]['Charge'] = verdict.charge_lookup(window.verdict['items'][key][1]['Charge']);
+                window.verdict['items'][key][0]['Verdict'] = verdict.verdict_lookup(window.verdict['items'][key][0]['Verdict']);
+                window.verdict['items'][key][1]['Verdict'] = verdict.verdict_lookup(window.verdict['items'][key][1]['Verdict']);
 
-            // Some values we compute.
-            window.verdict['items'][key][0]['slug'] = verdict.slugify(window.verdict['items'][key][0]['name_full']);
-            window.verdict['items'][key][0]['verdict_slug'] = verdict.slugify(window.verdict['items'][key][0]['Verdict']);
+                // Some values we compute.
+                window.verdict['items'][key][0]['slug'] = verdict.slugify(window.verdict['items'][key][0]['name_full']);
+                window.verdict['items'][key][0]['verdict_slug'] = verdict.slugify(window.verdict['items'][key][0]['Verdict']);
+                window.verdict['items'][key][1]['verdict_slug'] = verdict.slugify(window.verdict['items'][key][1]['Verdict']);
 
-            var charges_markup = verdict.charge_markup(window.verdict['items'][key][0]); 
-            var markup = verdict.item_markup(window.verdict['items'][key][0], charges_markup);
-            $('#charges').append(markup);
+                var colon = [':', ':'];
+                if ( window.verdict['items'][key][0]['Charge'] == 'Crime of violence (sentence enhancer)' ) colon[0] = '';
+                if ( window.verdict['items'][key][1]['Charge'] == 'Crime of violence (sentence enhancer)' ) colon[1] = '';
+                var charges_markup = verdict.charge_markup(window.verdict['items'][key][0], colon[0]) + verdict.charge_markup(window.verdict['items'][key][1], colon[1]);
+                var markup = verdict.item_markup(window.verdict['items'][key][0], charges_markup);
+                $('#charges').append(markup);
+            }
         });
         this.items = {};
         this.sheets_loaded = 0;
